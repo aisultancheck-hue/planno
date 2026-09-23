@@ -27,3 +27,12 @@ export type CreateTaskInput = {
     created_by: string
     workspace_id: string
 }
+export type UpdateTaskInput = {
+    title?: string
+    description?: string | null
+    status?: TaskStatus
+    priority?: TaskPriority
+    task_date?: string | null
+    due_at?: string | null
+    assigned_to?: string | null
+}
