@@ -112,5 +112,5 @@ export async function getArchivedTasks(): Promise<Task[]> {
     throw error
   }
 
-  return data ?? []
+  return (data ?? []) as Task[]
 }
