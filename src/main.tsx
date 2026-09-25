@@ -3,13 +3,16 @@ import { createRoot } from 'react-dom/client'
 
 import App from './App'
 import { AuthProvider } from './features/auth/AuthProvider'
+import { WorkspaceProvider } from './features/workspaces/WorkspaceProvider'
 
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <App />
+      <WorkspaceProvider>
+        <App />
+      </WorkspaceProvider>
     </AuthProvider>
   </StrictMode>,
 )
