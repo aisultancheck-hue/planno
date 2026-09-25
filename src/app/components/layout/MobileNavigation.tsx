@@ -1,38 +1,149 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 const mobileNavigation = [
-  { label: 'Home', to: '/' },
-  { label: 'Tasks', to: '/tasks' },
-  { label: 'Kanban', to: '/kanban' },
-  { label: 'Calendar', to: '/calendar' },
+  {
+    label: 'Home',
+    to: '/',
+  },
+  {
+    label: 'Tasks',
+    to: '/tasks',
+  },
+  {
+    label: 'Kanban',
+    to: '/kanban',
+  },
+  {
+    label: 'Calendar',
+    to: '/calendar',
+  },
+]
+
+const moreNavigation = [
+  {
+    label: 'Table',
+    to: '/tasks',
+  },
+  {
+    label: 'Templates',
+    to: '/templates',
+  },
+  {
+    label: 'Archive',
+    to: '/archive',
+  },
+  {
+    label: 'Settings',
+    to: '/settings',
+  },
+  {
+    label: 'Profile',
+    to: '/profile',
+  },
 ]
 
 export function MobileNavigation() {
+  const [isMoreOpen, setIsMoreOpen] =
+    useState(false)
+
+  function toggleMoreMenu() {
+    setIsMoreOpen((currentValue) => !currentValue)
+  }
+
+  function closeMoreMenu() {
+    setIsMoreOpen(false)
+  }
+
   return (
-    <nav
-      className="mobile-navigation"
-      aria-label="Mobile navigation"
-    >
-      {mobileNavigation.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          className={({ isActive }) =>
-            isActive
+    <>
+      {isMoreOpen && (
+        <div
+          className="mobile-more-backdrop"
+          onClick={closeMoreMenu}
+          aria-hidden="true"
+        />
+      )}
+
+      {isMoreOpen && (
+        <section
+          id="mobile-more-menu"
+          className="mobile-more-menu"
+          aria-label="More navigation"
+        >
+          <div className="mobile-more-header">
+            <h2>More</h2>
+
+            <button
+              type="button"
+              className="mobile-more-close"
+              onClick={closeMoreMenu}
+              aria-label="Close more menu"
+            >
+              Close
+            </button>
+          </div>
+
+          <nav
+            className="mobile-more-links"
+            aria-label="Additional navigation"
+          >
+            {moreNavigation.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className="mobile-more-link"
+                onClick={closeMoreMenu}
+              >
+                {item.label}
+              </NavLink>
+            ))}
+
+            <button
+              type="button"
+              className="mobile-more-link"
+              onClick={closeMoreMenu}
+            >
+              Workspace
+            </button>
+          </nav>
+        </section>
+      )}
+
+      <nav
+        className="mobile-navigation"
+        aria-label="Mobile navigation"
+      >
+        {mobileNavigation.map((item) => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            end={item.to === '/'}
+            onClick={closeMoreMenu}
+            className={({ isActive }) =>
+              isActive
+                ? 'mobile-navigation-item mobile-navigation-item-active'
+                : 'mobile-navigation-item'
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
+
+        <button
+          type="button"
+          className={
+            isMoreOpen
               ? 'mobile-navigation-item mobile-navigation-item-active'
               : 'mobile-navigation-item'
           }
+          onClick={toggleMoreMenu}
+          aria-expanded={isMoreOpen}
+          aria-controls="mobile-more-menu"
         >
-          {item.label}
-        </NavLink>
-      ))}
-
-      <button
-        type="button"
-        className="mobile-navigation-item"
-      >
-        More
-      </button>
-    </nav>
+          More
+        </button>
+      </nav>
+    </>
   )
 }

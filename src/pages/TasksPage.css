@@ -1,0 +1,195 @@
+.tasks-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tasks-header {
+  margin-bottom: 24px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.tasks-eyebrow {
+  margin: 0 0 4px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.tasks-header h2 {
+  margin: 0 0 8px;
+
+  font-size: 30px;
+}
+
+.tasks-description {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+.tasks-create-button {
+  min-height: 44px;
+  padding: 10px 16px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #1f2937;
+  color: #ffffff;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.tasks-create-button:hover {
+  background: #374151;
+}
+
+.tasks-create-button:focus-visible {
+  outline: 2px solid #1f2937;
+  outline-offset: 3px;
+}
+
+.tasks-toolbar {
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tasks-search {
+  flex: 1;
+  min-width: 240px;
+}
+
+.tasks-search input,
+.tasks-toolbar select {
+  min-height: 44px;
+  padding: 10px 12px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+
+  background: #ffffff;
+  color: #1f2937;
+
+  font: inherit;
+}
+
+.tasks-search input {
+  width: 100%;
+}
+
+.tasks-search input:focus-visible,
+.tasks-toolbar select:focus-visible {
+  outline: 2px solid #1f2937;
+  outline-offset: 2px;
+}
+
+.desktop-task-table {
+  overflow: hidden;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  background: #ffffff;
+}
+
+.task-table-header {
+  min-width: 900px;
+  padding: 14px 16px;
+
+  display: grid;
+  grid-template-columns:
+    120px
+    minmax(220px, 2fr)
+    120px
+    140px
+    120px
+    120px
+    140px;
+  gap: 12px;
+
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.desktop-task-table .state-card {
+  border: 0;
+  border-radius: 0;
+}
+
+.mobile-task-list {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .desktop-task-table {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .tasks-header {
+    flex-direction: column;
+  }
+
+  .tasks-header h2 {
+    font-size: 26px;
+  }
+
+  .tasks-create-button {
+    width: 100%;
+  }
+
+  .tasks-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .tasks-search {
+    min-width: 0;
+  }
+
+  .tasks-toolbar select {
+    width: 100%;
+  }
+
+  .desktop-task-table {
+    display: none;
+  }
+
+  .mobile-task-list {
+    display: block;
+  }
+}

@@ -1,0 +1,153 @@
+.kanban-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.kanban-header {
+  margin-bottom: 24px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.kanban-eyebrow {
+  margin: 0 0 4px;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.kanban-header h2 {
+  margin: 0 0 8px;
+
+  font-size: 30px;
+}
+
+.kanban-description {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+.kanban-create-button {
+  min-height: 44px;
+  padding: 10px 16px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #1f2937;
+  color: #ffffff;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.kanban-create-button:hover {
+  background: #374151;
+}
+
+.kanban-create-button:focus-visible {
+  outline: 2px solid #1f2937;
+  outline-offset: 3px;
+}
+
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.kanban-column {
+  min-width: 0;
+  min-height: 500px;
+  padding: 16px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  background: #f9fafb;
+}
+
+.kanban-column-header {
+  margin-bottom: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kanban-column-header h3 {
+  margin: 0;
+
+  font-size: 16px;
+}
+
+.kanban-count {
+  min-width: 28px;
+  min-height: 28px;
+  padding: 4px 8px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: #e5e7eb;
+  color: #4b5563;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kanban-column-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kanban-column-content .state-card {
+  min-height: 180px;
+
+  background: #ffffff;
+}
+
+@media (max-width: 1000px) {
+  .kanban-board {
+    grid-template-columns: 1fr;
+  }
+
+  .kanban-column {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .kanban-header {
+    flex-direction: column;
+  }
+
+  .kanban-header h2 {
+    font-size: 26px;
+  }
+
+  .kanban-create-button {
+    width: 100%;
+  }
+
+  .kanban-board {
+    gap: 16px;
+  }
+
+  .kanban-column {
+    padding: 14px;
+  }
+}
