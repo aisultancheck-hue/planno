@@ -3,13 +3,16 @@ import { supabase } from '../../lib/supabase/client'
 export type Workspace = {
   id: string
   name: string
+  is_personal: boolean
   created_at: string
 }
 
 export async function getUserWorkspaces(): Promise<Workspace[]> {
   const { data, error } = await supabase
     .from('workspaces')
-    .select('id, name, created_at')
+    .select(
+      'id, name, is_personal, created_at',
+    )
     .order('created_at', { ascending: true })
 
   if (error) {
@@ -24,7 +27,9 @@ export async function getWorkspaceById(
 ): Promise<Workspace | null> {
   const { data, error } = await supabase
     .from('workspaces')
-    .select('id, name, created_at')
+    .select(
+      'id, name, is_personal, created_at',
+    )
     .eq('id', workspaceId)
     .maybeSingle()
 
@@ -50,4 +55,19 @@ export async function createWorkspace(
   }
 
   return data as Workspace
+}
+
+export async function deleteWorkspace(
+  workspaceId: string,
+): Promise<void> {
+  const { error } = await supabase.rpc(
+    'delete_workspace',
+    {
+      target_workspace_id: workspaceId,
+    },
+  )
+
+  if (error) {
+    throw error
+  }
 }

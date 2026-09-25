@@ -28,6 +28,7 @@ export async function register({
       data: {
         full_name: fullName,
       },
+      emailRedirectTo: `${window.location.origin}/`,
     },
   })
 }
@@ -63,13 +64,29 @@ export function onAuthStateChange(
   )
 }
 
-export async function sendPasswordResetEmail(email: string) {
+export async function resendConfirmationEmail(
+  email: string,
+) {
+  return supabase.auth.resend({
+    type: 'signup',
+    email,
+    options: {
+      emailRedirectTo: `${window.location.origin}/`,
+    },
+  })
+}
+
+export async function sendPasswordResetEmail(
+  email: string,
+) {
   return supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${window.location.origin}/reset-password`,
   })
 }
 
-export async function updatePassword(newPassword: string) {
+export async function updatePassword(
+  newPassword: string,
+) {
   return supabase.auth.updateUser({
     password: newPassword,
   })

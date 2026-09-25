@@ -7,6 +7,12 @@ import {
 } from 'react'
 
 import { useAuth } from '../auth/AuthProvider'
+
+import {
+  getCurrentWorkspacePreference,
+  saveCurrentWorkspacePreference,
+} from './userPreferenceService'
+
 import {
   createWorkspace as createWorkspaceInDatabase,
   getUserWorkspaces,
@@ -35,7 +41,7 @@ export function WorkspaceProvider({
   const { user, loading: authLoading } = useAuth()
 
   const [workspaces, setWorkspaces] = useState<Workspace[]>([])
-  const [currentWorkspace, setCurrentWorkspace] =
+  const [currentWorkspace, setCurrentWorkspaceState] =
     useState<Workspace | null>(null)
 
   const [loading, setLoading] = useState(true)
@@ -43,7 +49,7 @@ export function WorkspaceProvider({
   async function refreshWorkspaces() {
     if (!user) {
       setWorkspaces([])
-      setCurrentWorkspace(null)
+      setCurrentWorkspaceState(null)
       setLoading(false)
       return
     }
@@ -55,7 +61,20 @@ export function WorkspaceProvider({
 
       setWorkspaces(data)
 
-      setCurrentWorkspace((previousWorkspace) => {
+      const preferredWorkspaceId =
+        await getCurrentWorkspacePreference(user.id)
+
+      const preferredWorkspace =
+        data.find(
+          (workspace) =>
+            workspace.id === preferredWorkspaceId,
+        ) ?? null
+
+      setCurrentWorkspaceState((previousWorkspace) => {
+        if (preferredWorkspace) {
+          return preferredWorkspace
+        }
+
         if (
           previousWorkspace &&
           data.some(
@@ -72,10 +91,28 @@ export function WorkspaceProvider({
       console.error('Failed to load workspaces:', error)
 
       setWorkspaces([])
-      setCurrentWorkspace(null)
+      setCurrentWorkspaceState(null)
     } finally {
       setLoading(false)
     }
+  }
+
+  function setCurrentWorkspace(workspace: Workspace) {
+    setCurrentWorkspaceState(workspace)
+
+    if (!user) {
+      return
+    }
+
+    void saveCurrentWorkspacePreference(
+      user.id,
+      workspace.id,
+    ).catch((error) => {
+      console.error(
+        'Failed to save current workspace:',
+        error,
+      )
+    })
   }
 
   async function createWorkspace(
