@@ -6,18 +6,20 @@ export function TasksPage() {
     <div className="tasks-page">
       <header className="tasks-header">
         <div>
-          <p className="tasks-eyebrow">Tasks</p>
+          <p className="page-eyebrow">
+            Task management
+          </p>
 
-          <h2>Task Table</h2>
+          <h2>All tasks</h2>
 
-          <p className="tasks-description">
-            Search, filter and review your tasks.
+          <p className="page-description">
+            Search, filter and organize everything in one place.
           </p>
         </div>
 
         <button
           type="button"
-          className="tasks-create-button"
+          className="primary-action"
         >
           + New task
         </button>
@@ -28,8 +30,8 @@ export function TasksPage() {
         aria-label="Task filters"
       >
         <label className="tasks-search">
-          <span className="sr-only">
-            Search tasks
+          <span className="tasks-search-icon">
+            ⌕
           </span>
 
           <input
@@ -46,18 +48,11 @@ export function TasksPage() {
           <option value="all">
             All statuses
           </option>
-
-          <option value="todo">
-            To Do
-          </option>
-
+          <option value="todo">To do</option>
           <option value="in-progress">
-            In Progress
+            In progress
           </option>
-
-          <option value="done">
-            Done
-          </option>
+          <option value="done">Done</option>
         </select>
 
         <select
@@ -67,18 +62,9 @@ export function TasksPage() {
           <option value="all">
             All priorities
           </option>
-
-          <option value="high">
-            High
-          </option>
-
-          <option value="medium">
-            Medium
-          </option>
-
-          <option value="low">
-            Low
-          </option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
         </select>
       </section>
 
@@ -86,12 +72,9 @@ export function TasksPage() {
         className="desktop-task-table"
         aria-label="Task table"
       >
-        <div
-          className="task-table-header"
-          role="row"
-        >
+        <div className="task-table-header">
           <span>Status</span>
-          <span>Title</span>
+          <span>Task</span>
           <span>Priority</span>
           <span>Assignee</span>
           <span>Date</span>
@@ -100,15 +83,15 @@ export function TasksPage() {
         </div>
 
         <EmptyState
-          title="No tasks yet"
-          description="Tasks will appear here once task data is connected."
+          title="Your task list is empty"
+          description="Once task data is connected, your tasks will appear here."
         />
       </section>
 
       <section className="mobile-task-list">
         <EmptyState
           title="No tasks yet"
-          description="On mobile, tasks will appear as compact cards instead of a wide table."
+          description="Your mobile task cards will appear here."
         />
       </section>
     </div>

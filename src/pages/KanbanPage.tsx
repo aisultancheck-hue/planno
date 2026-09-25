@@ -1,68 +1,98 @@
 import { EmptyState } from '../components/states/EmptyState'
 import './KanbanPage.css'
 
+const columns = [
+  {
+    title: 'To do',
+    count: 0,
+    accent: 'todo',
+    description:
+      'Tasks waiting to be started will appear here.',
+  },
+  {
+    title: 'In progress',
+    count: 0,
+    accent: 'progress',
+    description:
+      'Tasks currently being worked on will appear here.',
+  },
+  {
+    title: 'Done',
+    count: 0,
+    accent: 'done',
+    description:
+      'Completed tasks will appear here.',
+  },
+]
+
 export function KanbanPage() {
   return (
     <div className="kanban-page">
       <header className="kanban-header">
         <div>
-          <p className="kanban-eyebrow">Tasks</p>
-          <h2>Kanban</h2>
-          <p className="kanban-description">
-            Organize your tasks by status.
+          <p className="page-eyebrow">
+            Workflow
+          </p>
+
+          <h2>Kanban board</h2>
+
+          <p className="page-description">
+            See the status of your work at a glance.
           </p>
         </div>
 
-        <button
-          type="button"
-          className="kanban-create-button"
-        >
-          + New task
-        </button>
+        <div className="kanban-header-actions">
+          <button
+            type="button"
+            className="secondary-action"
+          >
+            Filter
+          </button>
+
+          <button
+            type="button"
+            className="primary-action"
+          >
+            + New task
+          </button>
+        </div>
       </header>
 
       <div className="kanban-board">
-        <section className="kanban-column">
-          <header className="kanban-column-header">
-            <h3>To Do</h3>
-            <span className="kanban-count">0</span>
-          </header>
+        {columns.map((column) => (
+          <section
+            key={column.title}
+            className="kanban-column"
+          >
+            <header className="kanban-column-header">
+              <div className="kanban-column-title">
+                <span
+                  className={`kanban-dot kanban-dot-${column.accent}`}
+                />
 
-          <div className="kanban-column-content">
-            <EmptyState
-              title="No tasks"
-              description="Tasks waiting to be started will appear here."
-            />
-          </div>
-        </section>
+                <h3>{column.title}</h3>
+              </div>
 
-        <section className="kanban-column">
-          <header className="kanban-column-header">
-            <h3>In Progress</h3>
-            <span className="kanban-count">0</span>
-          </header>
+              <span className="kanban-count">
+                {column.count}
+              </span>
+            </header>
 
-          <div className="kanban-column-content">
-            <EmptyState
-              title="No tasks"
-              description="Tasks currently being worked on will appear here."
-            />
-          </div>
-        </section>
+            <div className="kanban-column-content">
+              <EmptyState
+                title="Nothing here yet"
+                description={column.description}
+              />
+            </div>
 
-        <section className="kanban-column">
-          <header className="kanban-column-header">
-            <h3>Done</h3>
-            <span className="kanban-count">0</span>
-          </header>
-
-          <div className="kanban-column-content">
-            <EmptyState
-              title="No tasks"
-              description="Completed tasks will appear here."
-            />
-          </div>
-        </section>
+            <button
+              type="button"
+              className="kanban-add-button"
+            >
+              + Add task
+            </button>
+          </section>
+        ))}
       </div>
     </div>
   )

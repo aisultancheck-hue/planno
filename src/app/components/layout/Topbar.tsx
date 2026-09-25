@@ -1,59 +1,92 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-const pageTitles: Record<string, string> = {
-  '/': 'Dashboard',
-  '/tasks': 'Tasks',
-  '/kanban': 'Kanban',
-  '/calendar': 'Calendar',
-  '/templates': 'Templates',
-  '/archive': 'Archive',
-  '/settings': 'Settings',
-  '/profile': 'Profile',
+const pageTitles: Record<
+  string,
+  {
+    eyebrow: string
+    title: string
+  }
+> = {
+  '/': {
+    eyebrow: 'Workspace overview',
+    title: 'Good evening, Zhazira',
+  },
+  '/kanban': {
+    eyebrow: 'Task management',
+    title: 'Kanban board',
+  },
+  '/tasks': {
+    eyebrow: 'Task management',
+    title: 'All tasks',
+  },
+  '/calendar': {
+    eyebrow: 'Planning',
+    title: 'Calendar',
+  },
+  '/templates': {
+    eyebrow: 'Productivity',
+    title: 'Templates',
+  },
+  '/archive': {
+    eyebrow: 'Task history',
+    title: 'Archive',
+  },
+  '/settings': {
+    eyebrow: 'Preferences',
+    title: 'Settings',
+  },
+  '/profile': {
+    eyebrow: 'Account',
+    title: 'Your profile',
+  },
 }
 
 export function Topbar() {
   const location = useLocation()
-  const navigate = useNavigate()
 
-  const pageTitle =
-    pageTitles[location.pathname] ?? 'Planno'
-
-  function openTasks() {
-    navigate('/tasks')
-  }
-
-  function openProfile() {
-    navigate('/profile')
-  }
+  const currentPage =
+    pageTitles[location.pathname] ?? {
+      eyebrow: 'Planno',
+      title: 'Workspace',
+    }
 
   return (
     <header className="topbar">
-      <div>
+      <div className="topbar-heading">
         <p className="topbar-label">
-          Workspace
+          {currentPage.eyebrow}
         </p>
 
         <h1 className="topbar-title">
-          {pageTitle}
+          {currentPage.title}
         </h1>
       </div>
 
       <div className="topbar-actions">
-        <button
-          type="button"
-          onClick={openTasks}
-          aria-label="Open task search"
+        <Link
+          to="/tasks"
+          className="topbar-search"
+          aria-label="Open tasks search"
         >
-          Search
-        </button>
+          <span>⌕</span>
+          <span className="topbar-search-text">
+            Search
+          </span>
+        </Link>
 
-        <button
-          type="button"
-          onClick={openProfile}
+        <Link
+          to="/profile"
+          className="topbar-profile"
           aria-label="Open profile"
         >
-          Profile
-        </button>
+          <span className="topbar-profile-avatar">
+            ZH
+          </span>
+
+          <span className="topbar-profile-name">
+            Zhazira
+          </span>
+        </Link>
       </div>
     </header>
   )
