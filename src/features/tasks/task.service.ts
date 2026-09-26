@@ -19,6 +19,20 @@ export async function getActiveTasks(): Promise<Task[]> {
   return data ?? []
 }
 
+export async function getTaskById(id: string): Promise<Task> {
+  const { data, error } = await supabase
+    .from('tasks')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+    if (error) {
+    throw error
+  } 
+
+  return data as Task
+}
+
 export async function createTask(input: CreateTaskInput): Promise<Task> {
   const { data, error } = await supabase
     .from('tasks')
@@ -49,6 +63,41 @@ export async function updateTask(
   }
 
   return data
+}
+
+export async function changeTaskStatus(
+  id: string,
+  status: Task['status']
+): Promise<Task> {
+  return updateTask(id, { status })
+}
+
+export async function changeTaskPriority(
+  id: string,
+  priority: Task['priority']
+): Promise<Task> {
+  return updateTask(id, { priority })
+} 
+
+export async function changeTaskDate(
+  id: string,
+  taskDate: string | null
+): Promise<Task> {
+  return updateTask(id, { task_date: taskDate })
+}
+
+export async function changeTaskDeadline(
+  id: string,
+  dueAt: string | null
+): Promise<Task> {
+  return updateTask(id, { due_at: dueAt }) 
+}
+
+export async function changeTaskAssignee(
+  id: string,
+  assignedTo: string | null
+): Promise<Task> {
+  return updateTask(id, { assigned_to: assignedTo })
 }
 
 export async function completeTask(id: string): Promise<Task> {
